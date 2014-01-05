@@ -3,7 +3,7 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.6
+ *      Version 0.6.1
  *      
  *      getestet mit:
  *      CCU.IO ver. 1.0.9
@@ -56,7 +56,7 @@ function connectOnkyo() {
       logger.info("adapter onkyo ccuId is set to: "+ onkyoSettings.ccuId);
 		//Wenn Du noch was senden willst musst (initialisierung?) dann so:
 	  	//socketOnkyo.write("HIER_DEN_STRING");
-      socketOnkyo.write("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211MVLQSTN\x0D");
+      //socketOnkyo.write("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211MVLQSTN\x0D");
 	});
 }
 
@@ -73,7 +73,7 @@ socketOnkyo.on('data', function (data) {
   chunk = chunk.substr(9,3);
 	logger.info("adapter Onkyo Event Receiver chunk:"+chunk.toString());
   string = data.toString().slice(9);
-	string = string.substr(12,40);
+	string = string.substr(12,80);
   logger.info("adapter Onkyo Event Receiver string:"+string);  
 	//usw...
 	//z.B. ne CCU.IO Variable setzen
@@ -159,18 +159,23 @@ socketOnkyo.on('data', function (data) {
                     }
   //Navigation bei Netzwerk Modus
   if (chunk == 'NLT')  {
-    var string_nlt = string.substr(25,40);   
+    var string_nlt = string.substr(22,40);   
     setState(onkyoSettings.firstId+30,string_nlt);
+    var string_nlt_nav = string.substr(7,1);
+    string_nlt_nav = parseInt(string_nlt_nav) + 1;
+    var string_nlt_nav_summ = string.substr(11,1);
+    setState(onkyoSettings.firstId+31,string_nlt_nav+"/"+string_nlt_nav_summ);
                       }  
   //Rückgabe NSL-U0 ibs U9 in Variable schreiben
   if (chunk == 'NLS')  {
     var string_nls = string.substr(0,2);
+    var string_menu = string.substr(3,40);
     logger.info("adapter Onkyo Event Receiver NLS:"+string_nls);
     
     switch (string_nls)
                     {
             case "U0":
-                      setState(onkyoSettings.firstId+20,string);
+                      setState(onkyoSettings.firstId+20,string_menu);
                       setState(onkyoSettings.firstId+21,"");
                       setState(onkyoSettings.firstId+22,"");
                       setState(onkyoSettings.firstId+23,"");
@@ -182,31 +187,31 @@ socketOnkyo.on('data', function (data) {
                       setState(onkyoSettings.firstId+29,"");
                       break;
             case "U1":
-                      setState(onkyoSettings.firstId+21,string);
+                      setState(onkyoSettings.firstId+21,string_menu);
                       break;
             case "U2":
-                      setState(onkyoSettings.firstId+22,string);
+                      setState(onkyoSettings.firstId+22,string_menu);
                       break;
             case "U3":
-                      setState(onkyoSettings.firstId+23,string);
+                      setState(onkyoSettings.firstId+23,string_menu);
                       break;
             case "U4":
-                      setState(onkyoSettings.firstId+24,string);
+                      setState(onkyoSettings.firstId+24,string_menu);
                       break;
             case "U5":
-                      setState(onkyoSettings.firstId+25,string);
+                      setState(onkyoSettings.firstId+25,string_menu);
                       break;
             case "U6":
-                      setState(onkyoSettings.firstId+26,string);
+                      setState(onkyoSettings.firstId+26,string_menu);
                       break;
             case "U7":
-                      setState(onkyoSettings.firstId+27,string);
+                      setState(onkyoSettings.firstId+27,string_menu);
                       break;
             case "U8":
-                      setState(onkyoSettings.firstId+28,string);
+                      setState(onkyoSettings.firstId+28,string_menu);
                       break;
             case "U9":
-                      setState(onkyoSettings.firstId+29,string);
+                      setState(onkyoSettings.firstId+29,string_menu);
                       break;
             //default: 
             //alert('Default case');
@@ -391,50 +396,56 @@ function OnkyoInit() {
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+20, {
-	  Name: "Onkyo_NLS-U0",
+	  Name: "Onkyo_NET-MENU-0",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+21, {
-	  Name: "Onkyo_NLS-U1",
+	  Name: "Onkyo_NET-MENU-1",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+22, {
-	  Name: "Onkyo_NLS-U2",
+	  Name: "Onkyo_NET-MENU-2",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+23, {
-	  Name: "Onkyo_NLS-U3",
+	  Name: "Onkyo_NET-MENU-3",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+24, {
-	  Name: "Onkyo_NLS-U4",
+	  Name: "Onkyo_NET-MENU-4",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+25, {
-	  Name: "Onkyo_NLS-U5",
+	  Name: "Onkyo_NET-MENU-5",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+26, {
-	  Name: "Onkyo_NLS-U6",
+	  Name: "Onkyo_NET-MENU-6",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+27, {
-	  Name: "Onkyo_NLS-U7",
+	  Name: "Onkyo_NET-MENU-7",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+28, {
-	  Name: "Onkyo_NLS-U8",
+	  Name: "Onkyo_NET-MENU-8",
 	  TypeName: "VARDP"
 	});
 	setObject(onkyoSettings.firstId+29, {
-	  Name: "Onkyo_NLS-U9",
+	  Name: "Onkyo_NET-MENU-9",
 	  TypeName: "VARDP"
 	});
+  //Showing the actual position in NET-Mode
 	setObject(onkyoSettings.firstId+30, {
-	  Name: "Onkyo_NLT",
+	  Name: "Onkyo_NET_NAVIGATION",
 	  TypeName: "VARDP"
 	});
-	
+  //Point to navigation position in NET-Mode
+	setObject(onkyoSettings.firstId+31, {
+	  Name: "Onkyo_NET_POSITION",
+	  TypeName: "VARDP"
+	});
+  	
 	  logger.info("adapter onkyo objects inserted, starting at: "+onkyoSettings.firstId);
 }
 
