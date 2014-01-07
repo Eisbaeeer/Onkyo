@@ -1,8 +1,8 @@
 Onkyo adapter
 ======
 
-* Aktuelle Version: 0.6.2
-* Anzahl verwendeter Variablen in ccu.io: 33
+* Aktuelle Version: 0.6.1
+* Anzahl verwendeter Variablen in ccu.io: 32
 
 getestet mit Onkyo TX-NR626 
 
@@ -28,9 +28,6 @@ getestet mit Onkyo TX-NR626
 * Requests an Eisbaeeer@gmail.com
 
 ## Changelog
-
-### 0.6.2
-* Navigation erweitert (Einzelposition VAL31, Summe VAL32)
 
 ### 0.6.1
 * Small bugfixes
