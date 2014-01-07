@@ -3,7 +3,7 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.6.1
+ *      Version 0.6.2
  *      
  *      getestet mit:
  *      CCU.IO ver. 1.0.9
@@ -111,10 +111,12 @@ socketOnkyo.on('data', function (data) {
                     }
   //Onkyo_Tuning_Zone1
   if (chunk == 'TUN')  {
+    string = parseInt(string) / 100;
     setState(onkyoSettings.firstId+8,string);
                     }
   //Onkyo_Tuning_Zone2                    
   if (chunk == 'TUZ')  {
+    string = parseInt(string) / 100;  
     setState(onkyoSettings.firstId+9,string);
                     }
   //Onkyo_Internet_Radio_Preset_Zone1 (hex)
@@ -164,8 +166,9 @@ socketOnkyo.on('data', function (data) {
     var string_nlt_nav = string.substr(7,1);
     string_nlt_nav = parseInt(string_nlt_nav) + 1;
     var string_nlt_nav_summ = string.substr(11,1);
-    setState(onkyoSettings.firstId+31,string_nlt_nav+"/"+string_nlt_nav_summ);
-                      }  
+    setState(onkyoSettings.firstId+31,string_nlt_nav)
+    setState(onkyoSettings.firstId+32,string_nlt_nav+"/"+string_nlt_nav_summ);
+                          }  
   //Rückgabe NSL-U0 ibs U9 in Variable schreiben
   if (chunk == 'NLS')  {
     var string_nls = string.substr(0,2);
@@ -445,7 +448,11 @@ function OnkyoInit() {
 	  Name: "Onkyo_NET_POSITION",
 	  TypeName: "VARDP"
 	});
-  	
+  //Point to navigation position in NET-Mode
+	setObject(onkyoSettings.firstId+32, {
+	  Name: "Onkyo_NET_POSITION_SUMM",
+	  TypeName: "VARDP"
+	});  
 	  logger.info("adapter onkyo objects inserted, starting at: "+onkyoSettings.firstId);
 }
 
