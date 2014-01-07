@@ -3,7 +3,7 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.6.2
+ *      Version 0.6.3
  *      
  *      getestet mit:
  *      CCU.IO ver. 1.0.9
@@ -163,9 +163,11 @@ socketOnkyo.on('data', function (data) {
   if (chunk == 'NLT')  {
     var string_nlt = string.substr(22,40);   
     setState(onkyoSettings.firstId+30,string_nlt);
-    var string_nlt_nav = string.substr(7,1);
-    string_nlt_nav = parseInt(string_nlt_nav) + 1;
-    var string_nlt_nav_summ = string.substr(11,1);
+    //String zerlegen fuer Navigation
+    var string_nlt_nav = string.substr(6,2);                    //2 digits navigation
+    string_nlt_nav = parseInt(string_nlt_nav, 16) + 1;              //this start at zero, we need start at one and convert hex to decimal
+    var string_nlt_nav_summ = string.substr(10,2);              //2 digits navigation summary
+    string_nlt_nav_summ = parseInt(string_nlt_nav_summ, 16);    //convert hex to decimal    
     setState(onkyoSettings.firstId+31,string_nlt_nav)
     setState(onkyoSettings.firstId+32,string_nlt_nav+"/"+string_nlt_nav_summ);
                           }  
