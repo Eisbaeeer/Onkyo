@@ -3,7 +3,7 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.6.3
+ *      Version 0.7
  *      
  *      getestet mit:
  *      CCU.IO ver. 1.0.9
@@ -53,7 +53,7 @@ function connectOnkyo() {
 	socketOnkyo = net.connect({port: onkyoSettings.port, host: onkyoSettings.IP},
 	    function() { 
 	  	logger.info("adapter onkyo connected to Receiver: "+ onkyoSettings.IP);
-      logger.info("adapter onkyo ccuId is set to: "+ onkyoSettings.ccuId);
+      logger.info("adapter onkyo debug is set to: "+ onkyoSettings.debug);
 		//Wenn Du noch was senden willst musst (initialisierung?) dann so:
 	  	//socketOnkyo.write("HIER_DEN_STRING");
       //socketOnkyo.write("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211MVLQSTN\x0D");
@@ -61,20 +61,24 @@ function connectOnkyo() {
 }
 
 //Wird aufgerufen wenn der Socket zum Onkyo geschlossen wird
-socketOnkyo.on('close', function () {
+  socketOnkyo.on('close', function () {
     logger.info("adapter onkyo  disconnected from Receiver");
-});
+  });
 
 //Wird aufgerufen wenn Daten auf dem Socket vom Onkyo kommen:
-socketOnkyo.on('data', function (data) {
-	logger.info("adapter Onkyo Event Receiver raw:"+data.toString());
-	//hier z.B den String vom Onkyo zerpflücken:
+  socketOnkyo.on('data', function (data) {
+//hier z.B den String vom Onkyo zerpflücken:
   chunk = data.toString().slice(9);
   chunk = chunk.substr(9,3);
-	logger.info("adapter Onkyo Event Receiver chunk:"+chunk.toString());
   string = data.toString().slice(9);
 	string = string.substr(12,80);
-  logger.info("adapter Onkyo Event Receiver string:"+string);  
+  
+  //Logger | Debug
+  if (onkyoSettings.debug == true) {
+	   logger.info("adapter Onkyo Event Receiver raw:"+data.toString());
+	   logger.info("adapter Onkyo Event Receiver chunk:"+chunk.toString());  
+     logger.info("adapter Onkyo Event Receiver string:"+string);
+                                      }  
 	//usw...
 	//z.B. ne CCU.IO Variable setzen
 	//setState(ID,WERT); also setState(onkyoSettings.firstId+5,"10");
@@ -175,7 +179,9 @@ socketOnkyo.on('data', function (data) {
   if (chunk == 'NLS')  {
     var string_nls = string.substr(0,2);
     var string_menu = string.substr(3,40);
-    logger.info("adapter Onkyo Event Receiver NLS:"+string_nls);
+        if (onkyoSettings.debug == true) {
+            logger.info("adapter Onkyo Event Receiver NLS:"+string_nls);
+                                            }
     
     switch (string_nls)
                     {
@@ -223,6 +229,19 @@ socketOnkyo.on('data', function (data) {
             //break;
                     }            
                     }
+  //Listening Mode
+  if (chunk == 'LMD')  {
+    setState(onkyoSettings.firstId+33,string);
+                    }                    
+  //Listening Mode
+  if (chunk == 'IFA')  {
+    setState(onkyoSettings.firstId+34,string);
+                    }                    
+
+  //Listening Mode
+  if (chunk == 'IFV')  {
+    setState(onkyoSettings.firstId+35,string);
+                    }                    
 });
 
 //Wird beim Socket Fehler aufgerugen
@@ -266,8 +285,10 @@ socket.on('event', function (obj) {
   if (obj[0] == onkyoSettings.firstId) {
 		
 	//logger.info("adapter onkyo Event (hier hat sich bei der 100100 (firstID) was geändert): "+id+" "+val+" "+ts+" "+ack+" "+obj);
-  logger.info("adapter Onkyo Event: "+id+" "+val+" "+ts+" "+ack+" "+obj);
-		
+    if (onkyoSettings.debug == true) {
+        logger.info("adapter Onkyo Event: "+id+" "+val+" "+ts+" "+ack+" "+obj);
+		                                    }
+    
 		//Änderung der ersten ID 100101 und Wert ungleich ""
 		//if (id == onkyoSettings.firstId && val != "" || id == onkyoSettings.ccuId && val != "") {
 			if (id == onkyoSettings.firstId && val != "") { 
@@ -275,7 +296,9 @@ socket.on('event', function (obj) {
 			//Einen String für den Onkyo zusammenbasteln
 				//command = new Buffer("Hallo Onkyo umschalten bitte :D "+val+"\n");
         command = new Buffer("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211"+val+"\x0D");
-				logger.info("adapter Onkyo send:"+command);
+          if (onkyoSettings.debug == true) {
+				      logger.info("adapter Onkyo send:"+command);
+                                              }
 				socketOnkyo.write(command);
         //Variablen wieder zurücksetzen
         setState(id, "");
@@ -454,7 +477,20 @@ function OnkyoInit() {
 	setObject(onkyoSettings.firstId+32, {
 	  Name: "Onkyo_NET_POSITION_SUMM",
 	  TypeName: "VARDP"
+	});
+	setObject(onkyoSettings.firstId+33, {
+	  Name: "Onkyo_Listening_Mode",
+	  TypeName: "VARDP"
 	});  
+	setObject(onkyoSettings.firstId+34, {
+	  Name: "Onkyo_Audio_Information",
+	  TypeName: "VARDP"
+	});  
+	setObject(onkyoSettings.firstId+35, {
+	  Name: "Onkyo_Video_Information",
+	  TypeName: "VARDP"
+	});  
+
 	  logger.info("adapter onkyo objects inserted, starting at: "+onkyoSettings.firstId);
 }
 

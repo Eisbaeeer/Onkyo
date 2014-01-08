@@ -3,6 +3,7 @@
 		"settings": {
 		"IP": "xxx.xxx.xxx.xxx",
 		"port": 60128,
-    "firstId": xxxxxx
+    "firstId": xxxxxx,
+    "debug": false
 		}
 }	
