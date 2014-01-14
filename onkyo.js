@@ -3,11 +3,11 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.8
+ *      Version 0.9
  *      
  *      getestet mit:
- *      CCU.IO ver. 1.0.9
- *      Node ver. 0.10.20
+ *      ab CCU.IO ver. 1.0.9
+ *      ab Node ver. 0.10.20
  *      Onkyo TX-NR626, TX-NR515     
  *      
  */
@@ -295,16 +295,28 @@ socket.on('event', function (obj) {
 		//if (id == onkyoSettings.firstId && val != "" || id == onkyoSettings.ccuId && val != "") {
 			if (id == onkyoSettings.firstId && val != "") { 
       
-			//Einen String für den Onkyo zusammenbasteln
-				//command = new Buffer("Hallo Onkyo umschalten bitte :D "+val+"\n");
-        command = new Buffer("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211"+val+"\x0D");
-          if (onkyoSettings.debug == true) {
-				      logger.info("adapter Onkyo send:"+command);
+    //Array bauen und die Erste onkyoSettings.firstId einlesen
+    var myarray = val.split (','); 
+    
+      if (onkyoSettings.debug == true) {
+				      logger.info("adapter Onkyo myArray:"+myarray);
+              logger.info("adapter Onkyo myArray:"+myarray.length);        
+                      for( var i=0 ; i < myarray.length ; i++ )  {
+                              logger.info("adapter Onkyo myArray:"+myarray[i]);
+                                                  }
                                               }
-				socketOnkyo.write(command);
+		                                              
+			//Einen String für den Onkyo zusammenbasteln     
+      for( var i=0 ; i < myarray.length ; i++ )  {
+           command = new Buffer("ISCP\x00\x00\x00\x10\x00\x00\x00\x08\x01\x00\x00\x00\x211"+myarray[i]+"\x0D");
+           socketOnkyo.write(command);
+           sleep(50);
+                                                  }
+                                              }
         //Variablen wieder zurücksetzen
         setState(id, "");
-		}
+
+
   //MVL in hex
   if (id == onkyoSettings.firstId +7 && val != "") { 
         //convert decimal to hex 
