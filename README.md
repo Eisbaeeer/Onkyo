@@ -1,7 +1,7 @@
 Onkyo adapter
 ======
 
-* Aktuelle Version: 0.9
+* Aktuelle Version: 0.9.1
 * Anzahl verwendeter Variablen in ccu.io: 50
 
 getestet mit Onkyo TX-NR626; TX-NR515 
@@ -110,6 +110,10 @@ oder Power Off Zone 1 "PWR00".
 * Requests to Eisbaeeer@gmail.com
 
 ## Changelog
+
+### 0.9.1
+* Small bugfix (setState)
+* Remove function erase set var
 
 ### 0.9
 * Added Array to the first Id.
