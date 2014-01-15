@@ -8,28 +8,28 @@ getestet mit Onkyo TX-NR626; TX-NR515
 
 ## Dokumentation
 
-* Dieser Adapter ermöglicht die Anbindung eines Onkyo Reveivers an ccu.io
+* Dieser Adapter ermï¿½glicht die Anbindung eines Onkyo Reveivers an ccu.io
 * Die erste Variable kann als Sendevariable zum Onkyo verwendet werden. Die Variable 
   wird als array verarbeitet. Wird dort z.B. ein "MVLQSTN" gesetzt, wird der 
-  Befehl "Abfrage Master Volume" an den Onkyo gesendet. Anschließend wird die 
-  Variable wieder geleert. Durch die Verarbeitung als Array können dort auch 
+  Befehl "Abfrage Master Volume" an den Onkyo gesendet. Anschlieï¿½end wird die 
+  Variable wieder geleert. Durch die Verarbeitung als Array kï¿½nnen dort auch 
   mehrere Befehle durch "komma" getrennt verarbeitet werden. Der Onkyo Adapter sorgt 
-  im Hintergrund automatisch für das richtige Timing.
+  im Hintergrund automatisch fï¿½r das richtige Timing.
   Beispiel:
   SLI29,NTCPLAY ==> spielt das erste Lied vom "Front USB Eingang"
   SLI24,TUNDIRECT,TUN1,TUN0,TUN1,TUN8,TUN0 ==> setzt den Onkyo auf Tuner mode 
   und setzt die Frequenz "101.80"
-  Hierdurch ist es nun auch möglich, eigene Initialisierungen durchzuführen. Z.B. 
+  Hierdurch ist es nun auch mï¿½glich, eigene Initialisierungen durchzufï¿½hren. Z.B. 
   zyklische Abfrage von Werten. Oder Abfrage beim Starten von CCU.IO.
-* Die nächsten Variablen sind Rückmeldungen vom Onkyo (Volume, Mute, ...), 
-  welche vom Adapter gefüllt werden. 
+* Die nï¿½chsten Variablen sind Rï¿½ckmeldungen vom Onkyo (Volume, Mute, ...), 
+  welche vom Adapter gefï¿½llt werden. 
 * Die Variablen (ab Startvariable +34 bis +43) sind NET Variable. Diese werden 
-  beim Netzwerkbetrieb (smb, HomeMedia, etc.) gefüllt. Eine Anzeige zum 
+  beim Netzwerkbetrieb (smb, HomeMedia, etc.) gefï¿½llt. Eine Anzeige zum 
   Navigieren bieten die letzten 3 Variablen (Startvariable +44 bis +46 zeigt die aktuelle 
-  Position im Netzwerkbetrieb, die Startvariable +44 zeigt die Position im Menü und
+  Position im Netzwerkbetrieb, die Startvariable +44 zeigt die Position im Menï¿½ und
   die +45 die aktuelle Anzahl / Gesamtanzahl des Verzeichnisses).
   
-### Konfiguration über HTML bzw. settings.js unter adapter:
+### Konfiguration ï¿½ber HTML bzw. settings.js unter adapter:
 enabled:  true|false
 IP:       xxx.xxx.xxx.xxx (Onkyo Reveiver)
 Port:     xxxxx  (Onkyo Port)
@@ -43,19 +43,19 @@ Alle Variable mit der Kennzeichnung "xxxx_fb" sind Feedback Variable. Diese
 Variablen beeinhalten das direkte Feedback des Onkyo Receiver.
 * Set Variablen
 Diese Variablen "xxxx_set" senden beim Setzen den Befehl an den Onkyo Receiver. Dabei wird, 
-wenn nötig, der Wert von Dezimal in einen Hexadezimalen Wert gewandelt, damit der
+wenn nï¿½tig, der Wert von Dezimal in einen Hexadezimalen Wert gewandelt, damit der
 Onkyo Receiver den Befehl versteht. Die Variable wird nach dem Senden des Befehls 
 wieder geleert.
 * Command Variable
-Diese Variable sendet direkt den gesetzten Wert und wird anschließend wieder geleert.
-Hier können direkt die ISCP Befehle gestetzt werden. Beispiel: Power On Zone 1 "PWR01"
+Diese Variable sendet direkt den gesetzten Wert und wird anschlieï¿½end wieder geleert.
+Hier kï¿½nnen direkt die ISCP Befehle gestetzt werden. Beispiel: Power On Zone 1 "PWR01"
 oder Power Off Zone 1 "PWR00".
 
 
-### Verfügbare Variablen
-VARIABLE      ISCP  Read/Write      Beispiel    Bezeichnung
-firstId       ---   Array           PWR01       "Onkyo_Command"                
-firstId+1 	  NAT   read-only       --          "Onkyo_NET/USB_Artist_Name_Info"
+### Verfï¿½gbare Variablen
+>VARIABLE      ISCP  Read/Write      Beispiel    Bezeichnung
+>firstId       ---   Array           PWR01       "Onkyo_Command"                
+>firstId+1 	  NAT   read-only       --          "Onkyo_NET/USB_Artist_Name_Info"
 firstId+2     NTM   read-only       --          "Onkyo_NET/USB_Time_Info"
 firstId+3     NAL   read-only       --          "Onkyo_NET/USB_Album_Name_Info"
 firstId+4     NTR   read-only       --          "Onkyo_NET/USB_Track_Info"
@@ -133,7 +133,7 @@ firstId+49    IFV   read-only       --          "Onkyo_Video_Information"
 
 ### 0.6.1
 * Small bugfixes
-* Navigation im Netzwerkmodus hinzugefügt
+* Navigation im Netzwerkmodus hinzugefï¿½gt
 
 ### 0.6
 * First launch with basic functions
@@ -144,15 +144,15 @@ Copyright (c) 2014 Eisbaeeer [http://www.weimars.net](http://www.weimars.net)
 
 Lizenz: [CC BY-NC 3.0](http://creativecommons.org/licenses/by-nc/3.0/de/)
 
-Sie dürfen das Werk bzw. den Inhalt vervielfältigen, verbreiten und öffentlich zugänglich machen,
+Sie dï¿½rfen das Werk bzw. den Inhalt vervielfï¿½ltigen, verbreiten und ï¿½ffentlich zugï¿½nglich machen,
 Abwandlungen und Bearbeitungen des Werkes bzw. Inhaltes anfertigen zu den folgenden Bedingungen:
 
-  * **Namensnennung** - Sie müssen den Namen des Autors/Rechteinhabers in der von ihm festgelegten Weise nennen.
-  * **Keine kommerzielle Nutzung** - Dieses Werk bzw. dieser Inhalt darf nicht für kommerzielle Zwecke verwendet werden.
+  * **Namensnennung** - Sie mï¿½ssen den Namen des Autors/Rechteinhabers in der von ihm festgelegten Weise nennen.
+  * **Keine kommerzielle Nutzung** - Dieses Werk bzw. dieser Inhalt darf nicht fï¿½r kommerzielle Zwecke verwendet werden.
 
 Wobei gilt:
-Verzichtserklärung - Jede der vorgenannten Bedingungen kann aufgehoben werden, sofern Sie die ausdrückliche Einwilligung des Rechteinhabers dazu erhalten.
-Die Veröffentlichung dieser Software erfolgt in der Hoffnung, daß sie Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Die Nutzung dieser Software erfolgt auf eigenes Risiko!
+Verzichtserklï¿½rung - Jede der vorgenannten Bedingungen kann aufgehoben werden, sofern Sie die ausdrï¿½ckliche Einwilligung des Rechteinhabers dazu erhalten.
+Die Verï¿½ffentlichung dieser Software erfolgt in der Hoffnung, daï¿½ sie Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT Fï¿½R EINEN BESTIMMTEN ZWECK. Die Nutzung dieser Software erfolgt auf eigenes Risiko!
 =====
 This project needs ccu.io
 This project allow connection to Onkyo network enabled receiver with ISCP protocol
