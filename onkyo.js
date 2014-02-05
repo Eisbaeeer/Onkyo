@@ -3,7 +3,7 @@
  *      01'2014 Eisbaeeer
  *      mail: Eisbaeeer@gmail.com 
  *
- *      Version 0.9.1
+ *      Version 0.9.3
  *      
  *      getestet mit:
  *      CCU.IO ver. 1.0.9
@@ -27,6 +27,7 @@ var logger = require(__dirname+'/../../logger.js'),
 	net    = require('net');
 	
 	var socketOnkyo;
+  var onkyoConnected = 'false';
 	var objects = {},
 	    datapoints = {};
 		
@@ -48,10 +49,13 @@ connectOnkyo();
 
 function connectOnkyo() {
 	//Hier wird der Socket zum Receiver geöffnet
-	
+	  if (onkyoSettings.debug == true) {
 	logger.info("adapter onkyo starting connect to:"+onkyoSettings.IP+" "+onkyoSettings.port);
-	socketOnkyo = net.connect({port: onkyoSettings.port, host: onkyoSettings.IP},
-	    function() { 
+	                                   }
+  socketOnkyo = net.connect({port: onkyoSettings.port, host: onkyoSettings.IP},
+	    function() {
+      onkyoConnected = 'true';
+      setState(onkyoSettings.firstId+53,'true'); 
 	  	logger.info("adapter onkyo connected to Receiver: "+ onkyoSettings.IP);
       logger.info("adapter onkyo debug is set to: "+ onkyoSettings.debug);
 		//Wenn Du noch was senden willst musst (initialisierung?) dann so:
@@ -270,8 +274,12 @@ function connectOnkyo() {
 
 //Wird beim Socket Fehler aufgerugen
 socketOnkyo.on('error', function (data) {
-	logger.info("adapter onkyo ERROR Connection Receiver:"+data.toString());
-	//Neuen connect in 10sec initiieren
+      if (onkyoSettings.debug == true) {
+	logger.info("adapter onkyo ERROR Connection Receiver:" +data.toString());
+                                      }
+  setState(onkyoSettings.firstId+53,'false');                                    
+  onkyoConnected = 'false';
+	//Neuen connect in 10sec initiieren (geht nur einmalig, deshalb setinterval onkyoreconnect)
     activityTimeout = setTimeout(function () {
        connectOnkyo();
     }, 10000);
@@ -673,6 +681,12 @@ function decimalToHex(d, padding) {
     return hex;
 }
 
+function onkyoReconnect() {
+  if (onkyoConnected != 'true'){
+      connectOnkyo();
+      }
+}
+
 function sleep(milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
@@ -899,9 +913,14 @@ function OnkyoInit() {
 	  Name: "Onkyo_NET_Shuffle_Status",
 	  TypeName: "VARDP"
 	});  
+  setObject(onkyoSettings.firstId+53, {
+	  Name: "Onkyo_Connect_Status",
+	  TypeName: "VARDP"
+	});  
 
 	  logger.info("adapter onkyo objects inserted, starting at: "+onkyoSettings.firstId);
 }
 
 logger.info("adapter onkyo start");
 OnkyoInit ();
+setInterval(onkyoReconnect,10000);

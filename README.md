@@ -1,8 +1,8 @@
 Onkyo adapter
 ======
 
-* Aktuelle Version: 0.9.2
-* Anzahl verwendeter Variablen in ccu.io: 53
+* Aktuelle Version: 0.9.3
+* Anzahl verwendeter Variablen in ccu.io: 54
 
 getestet mit Onkyo TX-NR626; TX-NR515 
 
@@ -55,7 +55,7 @@ oder Power Off Zone 1 "PWR00".
 ### Verfügbare Variablen
 *VARIABLE      ISCP  Read/Write      Beispiel    Bezeichnung
 *firstId       ---   Array           PWR01       "Onkyo_Command"                
-*firstId+1 	  NAT   read-only       --          "Onkyo_NET/USB_Artist_Name_Info"
+*firstId+1 	   NAT   read-only       --          "Onkyo_NET/USB_Artist_Name_Info"
 *firstId+2     NTM   read-only       --          "Onkyo_NET/USB_Time_Info"
 *firstId+3     NAL   read-only       --          "Onkyo_NET/USB_Album_Name_Info"
 *firstId+4     NTR   read-only       --          "Onkyo_NET/USB_Track_Info"
@@ -107,12 +107,16 @@ oder Power Off Zone 1 "PWR00".
 *firstId+50    NST   read-only       --          "Onkyo_NET_Play_Status"
 *firstId+51    NST   read-only       --          "Onkyo_NET_Repeat_Status"
 *firstId+52    NST   read-only       --          "Onkyo_NET_Shuffle_Status"
-  
+*firstId+53    ---   read-only       --          "Onkyo_Connect_Status"  
 
 ## Todo/Roadmap
 * Requests to Eisbaeeer@gmail.com
 
 ## Changelog
+
+### 0.9.3
+* Added var +53 (Onkyo connect status)
+* Added function reconnect onkyo socket
 
 ### 0.9.2
 * Bugfix NET Navigation (cursor position in menu). Var +44 shows now the correct position in NET-MENU (1-10)
