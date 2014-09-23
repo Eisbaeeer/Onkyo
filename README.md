@@ -1,3 +1,5 @@
+THIS ADAPTER ONLY WORKS WITH CCU.IO --> www.ccu.io
+
 Onkyo adapter
 ======
 
@@ -8,27 +10,27 @@ getestet mit Onkyo TX-NR626; TX-NR515
 
 ## Dokumentation
 
-* Dieser Adapter ermöglicht die Anbindung eines Onkyo Reveivers an ccu.io
+* Dieser Adapter ermÃ¶glicht die Anbindung eines Onkyo Reveivers an ccu.io
 * Die erste Variable kann als Sendevariable zum Onkyo verwendet werden. Die Variable 
   wird als array verarbeitet. Wird dort z.B. ein "MVLQSTN" gesetzt, wird der 
-  Befehl "Abfrage Master Volume" an den Onkyo gesendet. Anschließend wird die 
-  Variable wieder geleert. Durch die Verarbeitung als Array können dort auch 
+  Befehl "Abfrage Master Volume" an den Onkyo gesendet. AnschlieÃŸend wird die 
+  Variable wieder geleert. Durch die Verarbeitung als Array kÃ¶nnen dort auch 
   mehrere Befehle durch "komma" getrennt verarbeitet werden. Der Onkyo Adapter sorgt 
-  im Hintergrund automatisch für das richtige Timing.
+  im Hintergrund automatisch fÃ¼r das richtige Timing.
   Beispiel:
   SLI29,NTCPLAY ==> spielt das erste Lied vom "Front USB Eingang"
   SLI24,TUNDIRECT,TUN1,TUN0,TUN1,TUN8,TUN0 ==> setzt den Onkyo auf Tuner mode 
   und setzt die Frequenz "101.80"
-  Hierdurch ist es nun auch möglich, eigene Initialisierungen durchzuführen. Z.B. 
+  Hierdurch ist es nun auch mÃ¶glich, eigene Initialisierungen durchzufÃ¼hren. Z.B. 
   zyklische Abfrage von Werten. Oder Abfrage beim Starten von CCU.IO.
-* Die nächsten Variablen werden zum setzten von Befehlen und für Rückmeldungen 
-  vom Onkyo verwendet. Beispiel (Volume, Mute, ...) diese werden vom Adapter gefüllt und
-  sind ECHTE Rückmeldungen. 
+* Die nÃ¤chsten Variablen werden zum setzten von Befehlen und fÃ¼r RÃ¼ckmeldungen 
+  vom Onkyo verwendet. Beispiel (Volume, Mute, ...) diese werden vom Adapter gefÃ¼llt und
+  sind ECHTE RÃ¼ckmeldungen. 
 * Die Variablen (ab Startvariable +20 bis +29) sind NET Variable. Diese werden 
-  beim Netzwerkbetrieb (smb, HomeMedia, etc.) gefüllt. Eine Anzeige zum 
+  beim Netzwerkbetrieb (smb, HomeMedia, etc.) gefÃ¼llt. Eine Anzeige zum 
   Navigieren bieten die letzten 3 Variablen
   
-### Konfiguration über HTML bzw. settings.js unter adapter:
+### Konfiguration Ã¼ber HTML bzw. settings.js unter adapter:
 enabled:  true|false
 IP:       xxx.xxx.xxx.xxx (Onkyo Reveiver)
 Port:     xxxxx  (Onkyo Port)
@@ -36,7 +38,7 @@ FirstId:  xxxxxx  (Erste ID)
 Debug:    true|false
   
 
-### Verfügbare Variablen
+### VerfÃ¼gbare Variablen
 |VARIABLE      |ISCP  |Read/Write      |Beispiel |Bezeichnung                           |
 |--------------|:----:|:--------------:|:-------:|-------------------------------------:|
 |firstId       |---   |Array           |PWR01    |"Onkyo_Command"                       |                
@@ -87,11 +89,11 @@ Debug:    true|false
 
 ### 0.9.4
 * Major changes in variable structur (combining set and feedback vars in front
-  of compatibility with Dashui and CCU.IO) - if we set a var, we don´t set "ACK" to true, if we 
+  of compatibility with Dashui and CCU.IO) - if we set a var, we donÂ´t set "ACK" to true, if we 
   get a feedback of Receiver, we set "ACK" to true. In this case it is possible to use one button
   for e.g. ON|OFF
 * Small bugfixes. Delete characters like CR, LF in string vars. Issues - It was not possible to 
-  use the var in DashUI for select-list. E.g. SLI doesn´t works.
+  use the var in DashUI for select-list. E.g. SLI doesnÂ´t works.
 * Default init of Mute and Master Volume and Input by changing the state of PWR and ZPW. 
 
 ### 0.9.3
@@ -101,7 +103,7 @@ Debug:    true|false
 ### 0.9.2
 * Bugfix NET Navigation (cursor position in menu). Var +44 shows now the correct position in NET-MENU (1-10)
 * Added vars +23,+25,+31,+33 (possibility of "true|false")
-* INFO: var +14 & var +16 dosen´t work (not supported by Onkyo)
+* INFO: var +14 & var +16 dosenÂ´t work (not supported by Onkyo)
 * Added vars "NST" - NET/USB Play/Repeat/Shuffle Status" (3 more vars) 
 
 ### 0.9.1
@@ -130,7 +132,7 @@ Debug:    true|false
 
 ### 0.6.1
 * Small bugfixes
-* Navigation im Netzwerkmodus hinzugefügt
+* Navigation im Netzwerkmodus hinzugefÃ¼gt
 
 ### 0.6
 * First launch with basic functions
@@ -141,15 +143,15 @@ Copyright (c) 2014 Eisbaeeer [http://www.weimars.net](http://www.weimars.net)
 
 Lizenz: [CC BY-NC 3.0](http://creativecommons.org/licenses/by-nc/3.0/de/)
 
-Sie dürfen das Werk bzw. den Inhalt vervielfältigen, verbreiten und öffentlich zugänglich machen,
+Sie dÃ¼rfen das Werk bzw. den Inhalt vervielfÃ¤ltigen, verbreiten und Ã¶ffentlich zugÃ¤nglich machen,
 Abwandlungen und Bearbeitungen des Werkes bzw. Inhaltes anfertigen zu den folgenden Bedingungen:
 
-  * **Namensnennung** - Sie müssen den Namen des Autors/Rechteinhabers in der von ihm festgelegten Weise nennen.
-  * **Keine kommerzielle Nutzung** - Dieses Werk bzw. dieser Inhalt darf nicht für kommerzielle Zwecke verwendet werden.
+  * **Namensnennung** - Sie mÃ¼ssen den Namen des Autors/Rechteinhabers in der von ihm festgelegten Weise nennen.
+  * **Keine kommerzielle Nutzung** - Dieses Werk bzw. dieser Inhalt darf nicht fÃ¼r kommerzielle Zwecke verwendet werden.
 
 Wobei gilt:
-Verzichtserklärung - Jede der vorgenannten Bedingungen kann aufgehoben werden, sofern Sie die ausdrückliche Einwilligung des Rechteinhabers dazu erhalten.
-Die Veröffentlichung dieser Software erfolgt in der Hoffnung, daß sie Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Die Nutzung dieser Software erfolgt auf eigenes Risiko!
+VerzichtserklÃ¤rung - Jede der vorgenannten Bedingungen kann aufgehoben werden, sofern Sie die ausdrÃ¼ckliche Einwilligung des Rechteinhabers dazu erhalten.
+Die VerÃ¶ffentlichung dieser Software erfolgt in der Hoffnung, daÃŸ sie Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÃœR EINEN BESTIMMTEN ZWECK. Die Nutzung dieser Software erfolgt auf eigenes Risiko!
 =====
 This project needs ccu.io
 This project allow connection to Onkyo network enabled receiver with ISCP protocol
